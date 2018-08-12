@@ -1,15 +1,19 @@
-#root {
-  text-align: center;
-}
-
 .wrap {
+  width: 500px;
   padding: 20px;
   border: 1px solid gray;
   border-radius: 10px;
   background: lightblue;
+  margin: 20px auto;
+  text-align: center;
 }
-.wrap .input {
-  margin-right: 5px;
+
+.wrap .input, .list {
+  margin: 0 auto;
+  width: 300px;
+}
+.wrap .button {
+  margin-left: 10px;
 }
 
 .fade-enter, .fade-appear {
