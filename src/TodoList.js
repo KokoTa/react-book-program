@@ -1,10 +1,11 @@
-import React, { Component, Fragment } from 'react';
-import { Input, Button, List } from 'antd';
+import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import store from './store';
-import { addItemAction, delItemAction } from './store/actionCreator';
+import { addItemAction, delItemAction, getListData } from './store/actionCreator';
+import TodoListUI from './TodoListUI';
 import './TodoList.css';
 
+// 容器组件 包裹 UI组件，容器组件处理逻辑
 class TodoList extends Component {
 
   constructor(props) {
@@ -15,6 +16,11 @@ class TodoList extends Component {
 
   handleStoreChange = () => {
     this.setState(store.getState());
+  }
+
+  componentDidMount = () => {
+    const action = getListData();
+    store.dispatch(action);
   }
   
   // 输入时触发
@@ -38,32 +44,13 @@ class TodoList extends Component {
   
   render() {
     return (
-      <Fragment>
-        <div className='wrap'>
-          <label htmlFor='insert'>输入事项：</label>
-          <Input
-            className='input'
-            id='insert'
-            value={this.state.inputValue}
-            placeholder='Insert todo info'
-            onChange={this.handleChange}
-            ref={(input) => this.input = input}/>
-          <Button
-            className='button'
-            type='primary'
-            onClick={this.handleClick}>
-            提交
-          </Button>
-        </div>
-        <List
-          className='list'
-          header={<div>Header</div>}
-          footer={<div>Footer</div>}
-          bordered
-          dataSource={this.state.list}
-          renderItem={(item, index) => (<List.Item onClick={() => this.deleteItem(index)}>{item}</List.Item>)}
-        />
-      </Fragment>
+      <TodoListUI
+        handleChange={this.handleChange}
+        handleClick={this.handleClick}
+        deleteItem={this.deleteItem}
+        inputValue={this.state.inputValue}
+        list={this.state.list}
+      />
     )
   }
 }
