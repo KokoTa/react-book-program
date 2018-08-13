@@ -1,16 +1,20 @@
 import React, { Component, Fragment } from 'react';
 import { Input, Button, List } from 'antd';
 import 'antd/dist/antd.css';
+import store from './store';
+import { addItemAction, delItemAction } from './store/actionCreator';
 import './TodoList.css';
 
 class TodoList extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      inputValue: '',
-      list: ['a', 'b', 'c', 'd', 'e', 'f']
-    };
+    this.state = store.getState();
+    store.subscribe(this.handleStoreChange);
+  }
+
+  handleStoreChange = () => {
+    this.setState(store.getState());
   }
   
   // 输入时触发
@@ -20,22 +24,16 @@ class TodoList extends Component {
     })
   }
 
-  // 点击时触发
+  // 添加项
   handleClick = () => {
-    // 如果需要用到之前的状态，务必使用函数写法
-    this.setState((prevState) => ({
-      list: [...prevState.list, prevState.inputValue],
-      inputValue: ''
-    }));
+    const action = addItemAction(this.state.inputValue, '');
+    store.dispatch(action);
   }
 
   // 删除项
   deleteItem = (index) => {
-    this.setState((prevState) => {
-      const list = [...prevState.list];
-      list.splice(index, 1);
-      return { list };
-    }, () => console.log('删除完毕'));
+    const action = delItemAction(index);
+    store.dispatch(action);
   }
   
   render() {
