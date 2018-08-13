@@ -1,4 +1,4 @@
-import { ADD_ITEM, DEL_ITEM, INIT_LIST} from './actionTypes';
+import { ADD_ITEM, DEL_ITEM, INIT_LIST, UPDATE_VALUE} from './actionTypes';
 
 const defaultState = {
   inputValue: '',
@@ -11,8 +11,8 @@ export default (state = defaultState, action) => {
   // 添加项
   if (action.type === ADD_ITEM) {
     const newState = {
-      inputValue: action.inputValue,
-      list: [...state.list, action.new_item]
+      inputValue: '',
+      list: [...state.list, state.inputValue]
     };
     
     return newState;
@@ -30,6 +30,14 @@ export default (state = defaultState, action) => {
   if (action.type === INIT_LIST) {
     const newState = JSON.parse(JSON.stringify(state));
     newState.list = action.list;
+
+    return newState;
+  }
+
+  // 更新 inputValue
+  if (action.type === UPDATE_VALUE) {
+    const newState = JSON.parse(JSON.stringify(state));
+    newState.inputValue = action.value;
 
     return newState;
   }

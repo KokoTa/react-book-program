@@ -5,3 +5,5 @@ export const DEL_ITEM = 'del_item';
 export const INIT_LIST = 'init_list'; 
 
 export const GET_LIST = 'get_list';
+
+export const UPDATE_VALUE = 'update_value';
