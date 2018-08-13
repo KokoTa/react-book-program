@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import store from './store';
-import { addItemAction, delItemAction, getListData } from './store/actionCreator';
+import { addItemAction, delItemAction, getListAction } from './store/actionCreator';
 import TodoListUI from './TodoListUI';
 import './TodoList.css';
 
@@ -19,7 +19,7 @@ class TodoList extends Component {
   }
 
   componentDidMount = () => {
-    const action = getListData();
+    const action = getListAction();
     store.dispatch(action);
   }
   
