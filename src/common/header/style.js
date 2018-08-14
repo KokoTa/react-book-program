@@ -48,7 +48,7 @@ export const NavItem = styled.a.attrs({ href: '/' })`
 export const NavSearchWrapper = styled.div`
   float: left;
   position: relative;
-  .iconfont {
+  .search-icon {
     position: absolute;
     right: 5px;
     bottom: 5px;
@@ -84,6 +84,62 @@ export const NavSearch = styled.input.attrs({ placeholder: '搜索' })`
       background: gray;
     }
   }
+`;
+
+export const SearchInfo = styled.div`
+  width: 240px;
+  position: absolute;
+  top: 56px; left: 20px;
+  padding: 0 20px;
+  box-shadow: 0 0 5px lightgray;
+  padding-bottom: 5px;
+  &:before {
+    content: '';
+    display: block;
+    height: 20px; width: 20px;
+    transform: rotate(45deg);
+    background: #fff;
+    position: absolute;
+    top: -5px;
+  }
+`;
+
+export const SearchInfoTitle = styled.div`
+  margin-top: 20px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  color: #787878;
+`;
+
+export const SearchInfoChange = styled.span`
+  float: right;
+  font-size: 12px;
+  &:hover { cursor: pointer; }
+  .spin {
+    font-size: 12px;
+    margin-right: 2px;
+    transition: all .2s ease;
+    display: block;
+    float: left;
+    transform-origin: center center;
+  }
+`;
+
+export const SearchInfoList = styled.div`
+  overflow: hidden;
+`;
+
+export const SearchItem = styled.a`
+  display: block;
+  float: left;
+  line-height: 20px;
+  padding: 0 5px;
+  margin-right: 10px;
+  margin-bottom: 15px;
+  font-size: 12px;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  &:hover { cursor: pointer; }
 `;
 
 export const Addition = styled.div`

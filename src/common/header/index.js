@@ -9,13 +9,58 @@ import {
   NavItem,
   NavSearchWrapper,
   NavSearch,
+  SearchInfo,
+  SearchInfoTitle,
+  SearchInfoChange,
+  SearchInfoList,
+  SearchItem,
   Addition,
   AddButton,
 } from './style.js'; // 样式组件
 
 class Header extends Component {
+
+  constructor(props) {
+    super(props);
+    this.spin = React.createRef();
+  }
+
+  showPanel = () => {
+    const { focused, hot_keys, page, totalPage, handleMouseEnter, handleMouseLeave, mouseIn, handlePageChange } = this.props;
+    const jsKeys = hot_keys.toJS(); // immutable对象 转 普通JS对象
+    const newKeys = jsKeys.slice(page * 10, (page + 1) * 10);
+    
+    if (focused || mouseIn) {
+      return (
+        <SearchInfo
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
+          <SearchInfoTitle>
+            热门
+            <SearchInfoChange
+              onClick={() => handlePageChange(page, totalPage, this.spin.current)}
+            >
+              <i ref={this.spin} className='iconfont spin'>&#xe851;</i>
+              换一批
+            </SearchInfoChange>
+          </SearchInfoTitle>
+          <SearchInfoList>
+            { 
+              newKeys.map((item) => {
+                return <SearchItem key={item}>{item}</SearchItem>
+              })
+            }
+          </SearchInfoList>
+        </SearchInfo>
+      )
+    }
+
+    return null;
+  }
+  
   render() {
-    const { inputValue, handleChange } = this.props;
+    const { inputValue, handleChange, handleFocus, handleBlur, hot_keys } = this.props;
     
     return (
       <HeaderWrapper>
@@ -29,8 +74,9 @@ class Header extends Component {
               <i className='iconfont'>&#xe636;</i>
             </NavItem>
             <NavSearchWrapper>
-              <NavSearch value={inputValue} onChange={handleChange}></NavSearch>
-              <i className='iconfont'>&#xe63d;</i>
+              <NavSearch value={inputValue} onFocus={() => handleFocus(hot_keys)} onBlur={handleBlur} onChange={handleChange}></NavSearch>
+              <i className='iconfont search-icon'>&#xe63d;</i>
+              { this.showPanel() }
             </NavSearchWrapper>
           </Nav>
           <Addition>
@@ -47,12 +93,36 @@ class Header extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  inputValue: state.getIn(['header', 'inputValue'])
+  inputValue: state.getIn(['header', 'inputValue']),
+  focused: state.getIn(['header', 'focused']),
+  mouseIn: state.getIn(['header', 'mouseIn']),
+  hot_keys: state.getIn(['header', 'hot_keys']),
+  page: state.getIn(['header', 'page']),
+  totalPage: state.getIn(['header', 'totalPage']),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   handleChange(e) {
     dispatch(actionCreator.getInputValue(e.target.value));
+  },
+  handleFocus(hot_keys) {
+    (hot_keys.size === 0) && dispatch(actionCreator.getHotKey());
+    dispatch(actionCreator.focusInput());
+  },
+  handleBlur() {
+    dispatch(actionCreator.blurInput());
+  },
+  handleMouseEnter() {
+    dispatch(actionCreator.mouseEnter());
+  },
+  handleMouseLeave() {
+    dispatch(actionCreator.mouseLeave());
+  },
+  handlePageChange(page, totalPage, spin) {
+    const originDeg = spin.style.transform.replace(/[^0-9]/ig, '');
+    spin.style.transform = `rotate(${Number(originDeg) + 360}deg)`;
+
+    dispatch(actionCreator.pageChange((++page) % totalPage));
   }
 });
 
