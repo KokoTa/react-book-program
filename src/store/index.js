@@ -1,19 +1,6 @@
-import { createStore, applyMiddleware, compose } from 'redux';
-import createSagaMiddleware from 'redux-saga';
+import { createStore } from 'redux';
 import reducer from './reducer';
-import mySaga from './sagas';
 
-const sagaMiddleware = createSagaMiddleware();
-// 添加 redux-devtools-extension
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-const store = createStore(
-  reducer,
-  composeEnhancers(
-    applyMiddleware(sagaMiddleware)
-  )
-);
-
-sagaMiddleware.run(mySaga)
+const store = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__());
 
 export default store;
