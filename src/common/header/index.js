@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { actionCreator } from './store';
 import { 
   HeaderWrapper,
   HeaderWidth,
@@ -14,6 +15,8 @@ import {
 
 class Header extends Component {
   render() {
+    const { inputValue, handleChange } = this.props;
+    
     return (
       <HeaderWrapper>
         <HeaderWidth>
@@ -26,7 +29,7 @@ class Header extends Component {
               <i className='iconfont'>&#xe636;</i>
             </NavItem>
             <NavSearchWrapper>
-              <NavSearch></NavSearch>
+              <NavSearch value={inputValue} onChange={handleChange}></NavSearch>
               <i className='iconfont'>&#xe63d;</i>
             </NavSearchWrapper>
           </Nav>
@@ -43,12 +46,14 @@ class Header extends Component {
   }
 }
 
-const mapStateToProps = () => ({
-
+const mapStateToProps = (state) => ({
+  inputValue: state.getIn(['header', 'inputValue'])
 });
 
-const mapDispatchToProps = () => ({
-
+const mapDispatchToProps = (dispatch) => ({
+  handleChange(e) {
+    dispatch(actionCreator.getInputValue(e.target.value));
+  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
