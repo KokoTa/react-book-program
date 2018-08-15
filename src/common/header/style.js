@@ -13,26 +13,28 @@ export const HeaderWidth = styled.div`
   margin: 0 auto;
 `;
 
-export const Logo = styled.a.attrs({ href: '/' })`
+export const Logo = styled.div`
   height: 100%;
   width: 100px;
   position: absolute;
   top: 0; left: 0;
   background: url(${logo});
   background-size: contain;
+  cursor: pointer;
 `;
+
 export const Nav = styled.div`
   height: 100%;
   width: 1000px;
   margin: 0 auto;
 `;
 
-export const NavItem = styled.a.attrs({ href: '/' })`
+export const NavItem = styled.div`
   line-height: 56px;
   padding: 0 15px;
   font-size: 17px;
   color: #333;
-  text-decoration: none;
+  cursor: pointer;
   &.left {
     float: left;
   }
@@ -93,6 +95,7 @@ export const SearchInfo = styled.div`
   padding: 0 20px;
   box-shadow: 0 0 5px lightgray;
   padding-bottom: 5px;
+  background: #fff;
   &:before {
     content: '';
     display: block;
@@ -157,6 +160,8 @@ export const AddButton = styled.button`
   border-radius: 19px;
   border: 1px solid #ec6149;
   font-size: 14px;
+  outline: none;
+  cursor: pointer;
   &.reg {
     color: #ec6149;
     background: #fff;

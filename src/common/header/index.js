@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { actionCreator } from './store';
 import { 
   HeaderWrapper,
@@ -65,20 +66,32 @@ class Header extends Component {
     return (
       <HeaderWrapper>
         <HeaderWidth>
-          <Logo></Logo>
+          <Link to='/'>
+            <Logo></Logo>
+          </Link>
+
           <Nav>
-            <NavItem className='left active'>首页</NavItem>
-            <NavItem className='left'>下载</NavItem>
-            <NavItem className='right'>登录</NavItem>
-            <NavItem className='right'>
-              <i className='iconfont'>&#xe636;</i>
-            </NavItem>
+            <Link to='/'>
+              <NavItem className='left active'>首页</NavItem>
+            </Link>
+            <Link to='/'>
+              <NavItem className='left'>下载</NavItem>
+            </Link>
+            <Link to='/'>
+              <NavItem className='right'>登录</NavItem>
+            </Link>
+            <Link to='/'>
+              <NavItem className='right'>
+                <i className='iconfont'>&#xe636;</i>
+              </NavItem>
+            </Link>
             <NavSearchWrapper>
               <NavSearch value={inputValue} onFocus={() => handleFocus(hot_keys)} onBlur={handleBlur} onChange={handleChange}></NavSearch>
               <i className='iconfont search-icon'>&#xe63d;</i>
               { this.showPanel() }
             </NavSearchWrapper>
           </Nav>
+
           <Addition>
             <AddButton className='write'>
               <i className='iconfont' style={{marginRight: '5px'}}>&#xe61c;</i>
