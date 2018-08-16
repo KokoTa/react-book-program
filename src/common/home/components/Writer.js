@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux';
-import { actionCreator } from '../store';
+import { actionCreators } from '../store';
 import {
   WriterWrapper,
   WriterItem
@@ -38,7 +38,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getList() {
-    dispatch(actionCreator.getWriters())
+    dispatch(actionCreators.getWriters())
   }
 })
 

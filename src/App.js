@@ -5,6 +5,7 @@ import store from './store';
 import Header from './common/header';
 import Home from './common/home';
 import Detail from './common/detail';
+import Login from './common/login';
 
 class App extends Component {
   render() {
@@ -14,7 +15,8 @@ class App extends Component {
           <Fragment>
             <Header></Header>
             <Route path='/' exact component={Home}></Route>
-            <Route path='/detail' exact component={Detail}></Route>
+            <Route path='/detail/:id' exact component={Detail}></Route>
+            <Route path='/login' exact component={Login}></Route>
           </Fragment>
         </BrowserRouter>
       </Provider>

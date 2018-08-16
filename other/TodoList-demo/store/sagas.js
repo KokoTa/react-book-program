@@ -1,6 +1,6 @@
 import { takeEvery, put } from 'redux-saga/effects';
 import { GET_LIST } from './actionTypes';
-import { setInitListData } from './actionCreator';
+import { setInitListData } from './actionCreators';
 import axios from 'axios';
 
 // 可以获得 GET_LIST 的 action 作为参数

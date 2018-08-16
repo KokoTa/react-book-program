@@ -1,6 +1,7 @@
 import React, { PureComponent, Fragment } from 'react'
 import { connect } from 'react-redux';
-import { actionCreator } from '../store';
+import { Link } from 'react-router-dom';
+import { actionCreators } from '../store';
 import {
   ArticleItem,
   ArticleLeft,
@@ -25,7 +26,9 @@ class List extends PureComponent {
             return (
               <ArticleItem key={index}>
                 <ArticleLeft>
-                  <h1 className='title'>{item.title}</h1>
+                  <Link to={`/detail/${item.id}`} style={{textDecoration: 'none'}}>
+                    <h1 className='title'>{item.title}</h1>
+                  </Link>
                   <p className='content'>{item.content}</p>
                 </ArticleLeft>
                 <ArticleRight>
@@ -47,10 +50,10 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getList() {
-    dispatch(actionCreator.getArticles())
+    dispatch(actionCreators.getArticles())
   },
   handleLoad() {
-    dispatch(actionCreator.loadMore())
+    dispatch(actionCreators.loadMore())
   }
 })
 

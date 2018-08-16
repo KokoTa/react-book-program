@@ -52,6 +52,12 @@ export class Home extends PureComponent {
   componentDidMount = () => {
     window.addEventListener('scroll', this.handleScroll);
   }
+
+  // 记得组件卸载后移除监听器
+  componentWillUnmount = () => {
+    window.removeEventListener('scroll', this.handleScroll);
+  }
+  
   
 }
 

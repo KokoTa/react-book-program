@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { addItemAction, delItemAction, getListAction, updateInputValue } from './store/actionCreator';
+import { addItemAction, delItemAction, getListAction, updateInputValue } from './store/actionCreators';
 import { connect } from 'react-redux';
 import TodoListUI from './TodoListUI';
 import 'antd/dist/antd.css';

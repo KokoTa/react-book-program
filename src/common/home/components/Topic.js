@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { actionCreator } from '../store';
+import { actionCreators } from '../store';
 import {
   TopicWrapper,
   TopicItem,
@@ -49,7 +49,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getList() {
-    dispatch(actionCreator.getTopic())
+    dispatch(actionCreators.getTopic())
   }
 })
 

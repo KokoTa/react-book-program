@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux';
-import { actionCreator } from '../store';
+import { actionCreators } from '../store';
 import {
   RecommendWrapper,
   RecommendItem
@@ -31,7 +31,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getList() {
-    dispatch(actionCreator.getRecommends())
+    dispatch(actionCreators.getRecommends())
   }
 })
 

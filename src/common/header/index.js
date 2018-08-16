@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { actionCreator } from './store';
+import { actionCreators } from './store';
+import { actionCreators as loginActionCreators } from '../login/store';
 import { 
   HeaderWrapper,
   HeaderWidth,
@@ -61,7 +62,7 @@ class Header extends Component {
   }
   
   render() {
-    const { inputValue, handleChange, handleFocus, handleBlur, hot_keys } = this.props;
+    const { inputValue, handleChange, handleFocus, handleBlur, hot_keys, loginStatus, loginOut } = this.props;
     
     return (
       <HeaderWrapper>
@@ -77,9 +78,19 @@ class Header extends Component {
             <Link to='/'>
               <NavItem className='left'>下载</NavItem>
             </Link>
-            <Link to='/'>
-              <NavItem className='right'>登录</NavItem>
-            </Link>
+            {
+              loginStatus ?
+              (
+                <Link to='/' onClick={loginOut}>
+                  <NavItem className='right'>退出</NavItem>
+                </Link>
+              ) :
+              (
+                <Link to='/login'>
+                  <NavItem className='right'>登录</NavItem>
+                </Link>
+              )
+            }
             <Link to='/'>
               <NavItem className='right'>
                 <i className='iconfont'>&#xe636;</i>
@@ -112,30 +123,36 @@ const mapStateToProps = (state) => ({
   hot_keys: state.getIn(['header', 'hot_keys']),
   page: state.getIn(['header', 'page']),
   totalPage: state.getIn(['header', 'totalPage']),
+
+  loginStatus: state.getIn(['login', 'loginStatus'])
 });
 
 const mapDispatchToProps = (dispatch) => ({
   handleChange(e) {
-    dispatch(actionCreator.getInputValue(e.target.value));
+    dispatch(actionCreators.getInputValue(e.target.value));
   },
   handleFocus(hot_keys) {
-    (hot_keys.size === 0) && dispatch(actionCreator.getHotKey());
-    dispatch(actionCreator.focusInput());
+    (hot_keys.size === 0) && dispatch(actionCreators.getHotKey());
+    dispatch(actionCreators.focusInput());
   },
   handleBlur() {
-    dispatch(actionCreator.blurInput());
+    dispatch(actionCreators.blurInput());
   },
   handleMouseEnter() {
-    dispatch(actionCreator.mouseEnter());
+    dispatch(actionCreators.mouseEnter());
   },
   handleMouseLeave() {
-    dispatch(actionCreator.mouseLeave());
+    dispatch(actionCreators.mouseLeave());
   },
   handlePageChange(page, totalPage, spin) {
     const originDeg = spin.style.transform.replace(/[^0-9]/ig, '');
     spin.style.transform = `rotate(${Number(originDeg) + 360}deg)`;
 
-    dispatch(actionCreator.pageChange((++page) % totalPage));
+    dispatch(actionCreators.pageChange((++page) % totalPage));
+  },
+
+  loginOut() {
+    dispatch(loginActionCreators.logoutAccount())
   }
 });
 
